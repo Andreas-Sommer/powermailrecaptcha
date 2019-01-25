@@ -1,13 +1,47 @@
+{namespace v=FluidTYPO3\Vhs\ViewHelpers}
 <div class="powermail_fieldwrap powermail_fieldwrap_type_recaptcha powermail_fieldwrap_{field.marker} {field.css} {settings.styles.framework.fieldAndLabelWrappingClasses}">
-	<label class="{settings.styles.framework.labelClasses}" title="{field.description}">
+	<label for="gcode{field.uid}" class="{settings.styles.framework.labelClasses}" title="{field.description}">
 		<vh:string.escapeLabels>{field.title}</vh:string.escapeLabels><span class="mandatory">*</span>
 	</label>
 
 	<div class="{settings.styles.framework.fieldWrappingClasses}">
 		<f:if condition="{settings.recaptcha.sitekey} != 'abcdef'">
 			<f:then>
-				<script src="//www.google.com/recaptcha/api.js" async defer></script>
-				<div class="g-recaptcha" data-sitekey="{settings.recaptcha.sitekey}"></div>
+				<div id="g-recaptcha{field.uid}"></div>
+				<f:form.textfield id="gcode{field.uid}" property="gcode" style="display:none" additionalAttributes="{vh:Validation.ValidationDataAttribute(field:field)}" />
+
+				<v:asset.script
+						external="1"
+						standalone="1"
+						name="googleRecaptcha{field.uid}"
+						path="https://www.google.com/recaptcha/api.js?onload=onloadCallback{field.uid}&render=explicit"
+					/>
+				<v:asset.script
+						name="googleRecaptchaOnload{field.uid}"
+						dependencies="googleRecaptcha{field.uid}"
+						standalone="1">
+					var verifyCallback{field.uid} = function(response) {
+						var selector = '#gcode<f:format.raw value="{field.uid}" />';
+						$(selector).val('');
+						if(response){
+							$(selector)
+								.removeClass('parsley-error')
+								.addClass('parsley-success')
+								.val(response);
+							var dataParsleyId = $(selector).data('parsley-id');
+							$('#parsley-id-' + dataParsleyId).remove();
+
+						}
+					};
+
+					var onloadCallback{field.uid} = function() {
+						grecaptcha.render('g-recaptcha{field.uid}', {
+							'sitekey' : '<f:format.raw value="{settings.recaptcha.sitekey}" />',
+							'callback' : verifyCallback{field.uid},
+							'expired-callback' : verifyCallback{field.uid}
+						});
+					}
+				</v:asset.script>
 			</f:then>
 			<f:else>
 				<p>
