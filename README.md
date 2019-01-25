@@ -9,6 +9,7 @@
 
 * powermail >= 5.0 and < 7.0
 * TYPO3 >= 8.7 and < 10.0
+* vhs >= 5.0
 * php >= 7.0
 
 
