@@ -34,10 +34,10 @@ $EM_CONF[$_EXTKEY] = [
     'CGLcompliance_note' => '',
     'constraints' => [
         'depends' => [
-            'typo3' => '8.7.0-9.99.99',
-            'php' => '7.0.0-7.99.99',
-            'powermail' => '5.0.0-7.99.99',
-			'vhs' => '5.0.0-5.99.99',
+            'typo3' => '8.7.0-10.4.99',
+            'php' => '7.2.0-7.99.99',
+            'powermail' => '8.0.0-8.99.99',
+			'vhs' => '6.0.0-6.99.99',
         ],
         'conflicts' => [],
         'suggests' => [],

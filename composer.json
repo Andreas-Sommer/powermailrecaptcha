@@ -17,9 +17,9 @@
   "type": "typo3-cms-extension",
   "license": "GPL-2.0-or-later",
   "require": {
-    "typo3/cms-core": ">=8.7.0 <10.0.0",
-    "in2code/powermail": ">=5.0.0 <8.0.0",
-    "fluidtypo3/vhs": ">=5.0.0 <7.0.0"
+    "typo3/cms-core": ">=9.5 <=10.4",
+    "in2code/powermail": ">=7.4.0 <9.0.0",
+    "fluidtypo3/vhs": ">=6.0.0 <7.0.0"
   },
   "replace": {
     "powermailrecaptcha": "self.version",
@@ -28,6 +28,11 @@
   "autoload": {
     "psr-4": {
       "In2code\\Powermailrecaptcha\\": "Classes"
+    }
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "powermailrecaptcha"
     }
   }
 }
