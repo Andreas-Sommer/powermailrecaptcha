@@ -19,10 +19,10 @@ class RecaptchaMethod extends AbstractMethod
 
     /**
      * Check if secret key is given and set it
-     * 
+     *
      * @throws \Exception
      */
-    public function initialize()
+    public function initialize(): void
     {
         if ($this->formHasRecaptcha()) {
             if (empty($this->configuration['secretkey']) || $this->configuration['secretkey'] === 'abcdef') {
@@ -35,7 +35,7 @@ class RecaptchaMethod extends AbstractMethod
     /**
      * @return bool true if spam recognized
      */
-    public function spamCheck()
+    public function spamCheck(): bool
     {
         if (!$this->formHasRecaptcha() || $this->skipCaptchaCheck()) {
             return false;
@@ -94,7 +94,7 @@ class RecaptchaMethod extends AbstractMethod
      *
      * @return bool
      */
-    protected function skipCaptchaCheck()
+    protected function skipCaptchaCheck(): bool
     {
         if (property_exists($this, 'flexForm')) {
             $confirmationActive = $this->flexForm['settings']['flexform']['main']['confirmation'] === '1';
@@ -106,7 +106,7 @@ class RecaptchaMethod extends AbstractMethod
     /**
      * @return string "confirmation" or "create"
      */
-    protected function getActionName()
+    protected function getActionName(): string
     {
         $pluginVariables = GeneralUtility::_GPmerged('tx_powermail_pi1');
         return $pluginVariables['action'];
